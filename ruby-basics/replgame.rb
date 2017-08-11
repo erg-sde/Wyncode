@@ -21,9 +21,9 @@ class ReplGame < Hash
     )
 
   @@attacktext = %(You can:
-  -Throw a (ro)ck
-  -Try to (ru)n
-  -Lay down and (di)e
+  -Throw a (rock)
+  -Try to (run)
+  -Lay down and (die)
   )
 
   @@acttext = %(You can:
@@ -169,9 +169,9 @@ class ReplGame < Hash
     puts @@acttext
     @playeract = gets.chomp.downcase
     case @playeract
-    when "forward" || "f"
+    when "forward"
       self.get_roomstate
-    when "deeper" || "d"
+    when "deeper"
       @treasureroll = rand(0..100)
       case @treasureroll
       when 0..80
@@ -181,7 +181,7 @@ class ReplGame < Hash
         @monster = "rabid dog"
         self.get_monsteract
       end
-    when "rest" "r"
+    when "rest"
       self.game_over
     else
       puts @@errtxt
