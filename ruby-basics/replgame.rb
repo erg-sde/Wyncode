@@ -97,8 +97,8 @@ class ReplGame < Hash
       in the darkness and prepare to run.)
       self.game_over
     else
-      self.get_monsteract
       @monsterenc = true
+      self.get_monsteract
       self.get_roomstate
     end
   end
