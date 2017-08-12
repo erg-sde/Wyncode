@@ -4,12 +4,9 @@ class ReplGame < Hash
   @@greeting = %(You awaken deep in a dark dungeon. A white rat wearing a wizard hat scurries over and 
   greets you: 'You're finally awake! What's your name, if you don't mind me asking?')
   @@newroom = %(You stumble into a dimly lit corridor. The air is damp and smells musty.)
-  @@dragontext = %(Your jaw drops open as a massive, scaled beast rears its head. 
-  Before you have a moment to react, you're engulfed in flames.)
-  @@badluck = %(You attempt to run and find yourself in a strange new corridor. You're wounded, 
-    and it doesn't look good for you. You search your bags for a health potion, but 
-    then remember this game doesn't have those.
-    As you think your luck can't get any worse, you turn around and... )
+  @@dragontext = %(Your jaw drops open as a massive, scaled beast rears its head. Before you have a moment to react, you're engulfed in flames.)
+  @@badluck = %(You attempt to run and find yourself in a strange new corridor. You're wounded, and it doesn't look good for you. You search your bags for a health potion, but then remember this game doesn't have those.
+  As you think your luck can't get any worse, you turn around and... )
   @@gameovertext = %(
     G         O.        :[
       A         V.      :[
@@ -30,10 +27,10 @@ class ReplGame < Hash
   )
 
   @@treasuretext = %(You see a treasure chest at the end of a long hallway. You begin to pick
-    up the pace as you walk closer. Sure enough, you've found yourself a nice, big treasure chest.
-    As you try to open it up, you...
-    Wake up. In class. At wyncode. Ed is saying something about arrays not being hashes but also
-    being hashes... Dammit.
+  up the pace as you walk closer. Sure enough, you've found yourself a nice, big treasure chest.
+  As you try to open it up, you...
+  Wake up. In class. At wyncode. Ed is saying something about arrays not being hashes but also
+  being hashes... Dammit.
   )
   def initialize
     super
@@ -47,6 +44,8 @@ class ReplGame < Hash
     if @monster_attack
       self[:health] -= 20
     end
+    @healthbar = "[" 
+    @healthbar << "<3" * (self[:health]/10) << "-" * (10 - (self[:health] / 10)) << "]"
   end
 
   def get_name
@@ -73,8 +72,10 @@ class ReplGame < Hash
       puts @@newroom
       case @roomstate
       when 1..45
+        puts "You hear something move in the darkness. A monster approaches."
         self.monster_enc
       when 46..90
+        puts "After walking for some time, you stumble upon a doorway in the darkness. You pass through it."
         self.get_player_act
       when 91..100
         unless @roomcount <= 3
@@ -82,24 +83,25 @@ class ReplGame < Hash
             in the distance. You begin walking toward it and pass through a doorway.)
           self.get_treasure
         else
-          self.get_roomstate
+          self.get_player_act
         end
       end
     else
-      self.get_player_attack
+      self.monster_enc
     end
   end
 
   def monster_enc
-    self.get_monster
+    unless @monsterenc
+      self.get_monster
+    end
+    @monsterenc = true
     if @monster == "dragon"
       puts %(You hear a low rumbling and turn around. You see eyes 
       in the darkness and prepare to run.)
       self.game_over
     else
-      @monsterenc = true
-      self.get_monsteract
-      self.get_roomstate
+      self.get_player_attack
     end
   end
 
@@ -109,34 +111,27 @@ class ReplGame < Hash
     when 0..45
       @monster = "rat"
       puts "You're startled by a sickly looking rat. What will you do?"
-      self.get_player_attack
     when 46..85
       @monster = "rabid dog"
       puts "A fierce looking dog approaches, baring its teeth."
-      self.get_player_attack
+      self.get_dogstate
     when 86..100
       @monster = "dragon"
     end
   end
 
   def get_monsteract
-    case @monster
-    when "rat"
-      puts "The rat scurries away."
-      @monsterenc = false
-    when "rabid dog"
-      puts "The dog snarls and jumps toward you"
-      @dogbite = rand(0..50)
-      case @dogbite
-      when 0..35
-        puts "The dog sinks his teeth into you and you desperately push him off"
-        @monster_attack = true
-        self.get_roomstate
-      when 36..50
-        puts "You dodge the dog's lunge like some sort of ninja. Impressive."
-        @monster_attack = false
-        self.get_roomstate
-      end
+    puts "The dog snarls and jumps toward you"
+    @dogbite = rand(0..50)
+    case @dogbite
+    when 0..35
+      puts "The dog sinks his teeth into you and you desperately push him off"
+      @monster_attack = true
+      self.get_roomstate
+    when 36..50
+      puts "You dodge the dog's lunge like some sort of ninja. Impressive."
+      @monster_attack = false
+      self.get_roomstate
     end
   end
 
@@ -149,19 +144,29 @@ class ReplGame < Hash
   def get_player_attack
     puts "What do you want to do?"
     puts @@attacktext
+    puts @healthbar
+    if @doghealth != nil
+      puts "RABID DOG: #{@doghealthbar}"
+    end
     @playeratk = gets.chomp.downcase
     case @playeratk
     when "rock", "ro"
       if @monster == "rabid dog"
+        @playeratk = true
+        puts "You throw a rock at the dog. It wimpers in pain. Hope you're proud of yourself."
         self.get_dogstate
-        @doghealth -= 1
+        self.get_roomstate
+      else
+        puts "The rat scurries away."
+        @monsterenc = false
+        self.get_roomstate
       end
-      self.get_monsteract
     when "run", "ru"
       @trying = rand(0..50)
       case @trying
       when 0..40
         puts "You almost feel the dog's breath on your neck as you run, but suddenly he seems to be distracted. He stops chasing."
+        @monsterenc = false
         self.get_roomstate
       when 41..50
         self.game_over
@@ -175,18 +180,26 @@ class ReplGame < Hash
   end
 
   def get_dogstate
-    @doghealth ||= 4
+    @doghealth ||= 2
     if @doghealth == 0
       puts "The dog runs off with its tail between its legs. Well done."
       @monsterenc = false
     end
+    if @playeratk
+      @doghealth -= 1
+      @playeratk = false
+    end
+    @doghealthbar = "["
+    @doghealthbar << ("<3" * @doghealth) << ("-" * (2-@doghealth)) << "]"
   end
 
   def get_player_act
     puts @@acttext
+    puts @healthbar
     @playeract = gets.chomp.downcase
     case @playeract
     when "forward", "f"
+      puts "You move forward, deeper into the darkness. You see a doorway and go through it."
       self.get_roomstate
     when "deeper", "d"
       @treasureroll = rand(0..100)
@@ -197,7 +210,7 @@ class ReplGame < Hash
       else
         @monster = "rabid dog"
         puts "While you're rummaging about, a scary looking dog approaches. As you turn around, he jumps at you!"
-        self.get_monsteract
+        self.get_player_attack
       end
     when "rest", "r"
       self.game_over
