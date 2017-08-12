@@ -5,18 +5,16 @@ class ReplGame < Hash
   greets you: 'You're finally awake! What's your name, if you don't mind me asking?')
   @@newroom = %(You stumble into a dimly lit corridor. The air is damp and smells musty.)
   @@dragontext = %(Your jaw drops open as a massive, scaled beast rears its head. 
-
   Before you have a moment to react, you're engulfed in flames.)
   @@badluck = %(You attempt to run and find yourself in a strange new corridor. You're wounded, 
     and it doesn't look good for you. You search your bags for a health potion, but 
     then remember this game doesn't have those.
-
     As you think your luck can't get any worse, you turn around and... )
   @@gameovertext = %(
-    G        O.     :[
-      A       V.    :[
-        M      E.   :[
-          E     R.  :[
+    G         O.        :[
+      A         V.      :[
+        M         E.    :[
+          E         R.  :[
     )
 
   @@attacktext = %(You can:
@@ -34,8 +32,6 @@ class ReplGame < Hash
   @@treasuretext = %(You see a treasure chest at the end of a long hallway. You begin to pick
     up the pace as you walk closer. Sure enough, you've found yourself a nice, big treasure chest.
     As you try to open it up, you...
-
-
     Wake up. In class. At wyncode. Ed is saying something about arrays not being hashes but also
     being hashes... Dammit.
   )
@@ -72,7 +68,7 @@ class ReplGame < Hash
       @roomstate = rand(1..100)
       @roomcount += 1
       if @roomcount > 3
-        @roomstate *= @roomcount
+        @roomstate *= Math.log(@roomcount)
       end
       puts @@newroom
       case @roomstate
@@ -195,7 +191,7 @@ class ReplGame < Hash
     when "deeper", "d"
       @treasureroll = rand(0..100)
       case @treasureroll
-      when 0..80
+      when 0..50
         puts "As you search through the room, you find a doorway leading into another room. You go in."
         self.get_treasure
       else
