@@ -81,10 +81,12 @@ class ReplGame < Hash
       when 46..90
         self.get_player_act
       when 91..100
-        if @roomcount == 0
+        unless @roomcount <= 3
           puts %(As you begin to explore, you see something shiny 
             in the distance. You begin walking toward it and pass through a doorway.)
-        self.get_treasure
+          self.get_treasure
+        else
+          self.get_roomstate
         end
       end
     else
