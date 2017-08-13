@@ -87,7 +87,7 @@ class ReplGame < Hash
         end
       end
     else
-      self.get_player_attack
+      self.get_monsteract
     end
   end
 
