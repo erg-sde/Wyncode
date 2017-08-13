@@ -40,11 +40,9 @@ class ReplGame < Hash
 
   def get_health
     self[:health] ||= 10
-    if @monster_attack
-      self[:health] -= 2
-    end
     if self[:health] <= 0
       self.game_over
+      return
     else
       @healthbar = "#{self[:name]}: [" 
       @healthbar << "<3" * (self[:health]) << "-" * (10 - self[:health]) << "]"
@@ -81,6 +79,7 @@ class ReplGame < Hash
           puts %(As you begin to explore, you see something shiny 
             in the distance. You begin walking toward it and pass through a doorway.)
           self.get_treasure
+          return
         else
           puts %(The room is labyrinthine and you easily get lost wandering its paths. Somehow you end up where you started.)
           self.get_player_act
@@ -98,6 +97,7 @@ class ReplGame < Hash
         puts %(You hear a low rumbling and turn around. You see eyes 
         in the darkness and prepare to run.)
         self.game_over
+        return
       else
         @monsterenc = true
         self.get_player_attack
@@ -127,22 +127,22 @@ class ReplGame < Hash
   end
 
   def get_monsteract
-    if @monster == "rabid dog"
+    if @monster == "rabid dog" && @doghealth
       puts "The dog snarls and jumps toward you"
       @dogbite = rand(0..50)
       case @dogbite
       when 0..35
         puts "The dog sinks his teeth into you and you desperately push him off"
-        @monster_attack = true
+        self[:health] -= 2
         self.get_health
-        self.get_player_attack
+        if self[:health] > 0
+          self.get_player_attack
+        end
       when 36..50
         puts "You dodge the dog's lunge like some sort of ninja. Impressive."
-        @monster_attack = false
         self.get_player_attack
       end
     else
-      "The rat hisses at you. It's disgusting."
       self.get_player_attack
     end
   end
@@ -186,9 +186,11 @@ class ReplGame < Hash
         self.get_roomstate
       when 41..50
         self.game_over
+        return
       end
     when "die", "di"
       self.game_over
+      return
     else
       puts @@errtxt
       self.get_player_attack
@@ -231,10 +233,11 @@ class ReplGame < Hash
         @monster = "rabid dog"
         @monsterenc = true
         puts "While you're rummaging about, a scary looking dog approaches. As you turn around, he jumps at you!"
-        self.get_roomstate
+        self.get_monsteract
       end
     when "rest", "r"
       self.game_over
+      return
     else
       puts @@errtxt
       self.get_player_act
