@@ -1,12 +1,18 @@
 class ReplGame < Hash
   srand(number=Random.new_seed)
+  
   @@errtxt = "I'm not sure what you mean, but you don't have much time to waste."
+  
   @@greeting = %(You awaken deep in a dark dungeon. A white rat wearing a wizard hat scurries over and 
   greets you: 'You're finally awake! What's your name, if you don't mind me asking?')
+  
   @@newroom = %(You stumble into a dimly lit corridor. The air is damp and smells musty.)
+  
   @@dragontext = %(Your jaw drops open as a massive, scaled beast rears its head. Before you have a moment to react, you're engulfed in flames.)
+  
   @@badluck = %(You attempt to run and find yourself in a strange new corridor. You're wounded, and it doesn't look good for you. You search your bags for a health potion, but then remember this game doesn't have those.
   As you think your luck can't get any worse, you turn around and... )
+  
   @@gameovertext = %(
     G         O.        :[
       A         V.      :[
@@ -14,24 +20,28 @@ class ReplGame < Hash
           E         R.  :[
     )
 
-  @@attacktext = %(You can:
+  @@attacktext = %(
+  You can:
   -Throw a (ro)ck
   -Try to (ru)n
   -Lay down and (di)e
   )
 
-  @@acttext = %(You can:
+  @@acttext = %(
+  You can:
   -Move (f)orward
   -Search (d)eeper for treasure
   -Try and get some (r)est.
   )
 
-  @@treasuretext = %(You see a treasure chest at the end of a long hallway. You begin to pick
+  @@treasuretext = %(
+  You see a treasure chest at the end of a long hallway. You begin to pick
   up the pace as you walk closer. Sure enough, you've found yourself a nice, big treasure chest.
   As you try to open it up, you...
   Wake up. In class. At wyncode. Ed is saying something about arrays not being hashes but also
   being hashes... Dammit.
   )
+
   def initialize
     super
     self.get_name
@@ -157,7 +167,7 @@ class ReplGame < Hash
     puts "This doesn't look good. What do you want to do?"
     puts @@attacktext
     puts @healthbar
-    if @monster == "rabid dog"
+    if @doghealthbar
       puts "RABID DOG: #{@doghealthbar}"
     end
     @playerattack = gets.chomp.downcase
@@ -229,6 +239,7 @@ class ReplGame < Hash
       when 80..100
         puts "As you search through the room, you find a doorway leading into another room. You go in."
         self.get_treasure
+        return
       else
         @monster = "rabid dog"
         @monsterenc = true
@@ -248,4 +259,3 @@ class ReplGame < Hash
     puts @@treasuretext
   end
 end
-ReplGame.new
