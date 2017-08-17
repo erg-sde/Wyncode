@@ -1,8 +1,8 @@
 class QuickFox
   p self
-	def jumped_over thing1, thing2
+  def jumped_over thing1, thing2
     p self
-	end
+  end
 end
 
 def whatami
