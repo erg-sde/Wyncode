@@ -1,6 +1,5 @@
 def max_find *nums
-  nums.delete_if { |i| i < nums.sort.[](-1) }
-  return nums
+  nums.sort.last
 end
 
 i = max_find 1, 2, 3, 4, 5, 6
