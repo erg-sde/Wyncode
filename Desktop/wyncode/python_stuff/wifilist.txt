@@ -1,0 +1,23 @@
+                            SSID BSSID             RSSI CHANNEL HT CC SECURITY (auth/unicast/group)
+                          ATT592 3c:36:e4:32:a4:10 -87  11      Y  -- WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+                         XFINITY 00:0d:67:9c:30:a5 -91  153,-1  Y  US WPA2(802.1x/AES/AES) 
+                     xfinitywifi 00:0d:67:9c:30:ae -80  11      Y  US NONE
+                         XFINITY 78:f2:9e:75:59:0b -65  11      Y  US WPA2(802.1x/AES/AES) 
+                     xfinitywifi 78:f2:9e:75:59:0a -67  11      Y  US NONE
+                      WynCode2.4 78:f2:9e:75:59:08 -68  11      Y  US WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+                         XFINITY 10:05:01:7b:17:7b -76  6       Y  US WPA2(802.1x/AES/AES) 
+                    WyncodeStaff 82:2a:a8:87:db:8a -45  1       Y  -- WPA2(PSK/AES/AES) 
+                 WyncodeStudents 80:2a:a8:87:dc:39 -77  1       Y  -- WPA2(PSK/AES/AES) 
+                    WyncodeStaff 82:2a:a8:87:dc:3c -46  1       Y  -- WPA2(PSK/AES/AES) 
+                 WyncodeStudents 80:2a:a8:87:dc:3c -46  1       Y  -- WPA2(PSK/AES/AES) 
+                 WyncodeStudents 80:2a:a8:87:db:8a -48  1       Y  -- WPA2(PSK/AES/AES) 
+   DIRECT-5C-HP ENVY 4520 series c8:d3:ff:fc:44:5e -79  1       Y  -- WPA2(PSK/AES/AES) 
+                         XFINITY 78:f2:9e:75:59:12 -82  36      Y  US WPA2(802.1x/AES/AES) 
+                     xfinitywifi 78:f2:9e:75:59:11 -83  36      Y  US NONE
+                      WynCode5.0 78:f2:9e:75:59:10 -82  36      Y  US WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+                       CableWiFi 00:0d:67:9c:30:a7 -91  153,-1  Y  US NONE
+                    WyncodeStaff 82:2a:a8:88:db:8a -51  44,+1   Y  -- WPA2(PSK/AES/AES) 
+                 WyncodeStudents 82:2a:a8:88:dc:39 -79  44,+1   Y  -- WPA2(PSK/AES/AES) 
+                    WyncodeStaff 82:2a:a8:88:dc:3c -51  44,+1   Y  -- WPA2(PSK/AES/AES) 
+                 WyncodeStudents 80:2a:a8:88:dc:3c -49  44,+1   Y  -- WPA2(PSK/AES/AES) 
+                 WyncodeStudents 80:2a:a8:88:db:8a -51  44,+1   Y  -- WPA2(PSK/AES/AES) 

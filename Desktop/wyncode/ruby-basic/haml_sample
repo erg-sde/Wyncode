@@ -1,0 +1,10 @@
+%html
+  %head 
+    %title This is the title of my HTML page
+  %body 
+    #container
+    %header
+      %h1 Check this out
+    #main The HAML gem allows you to write HTML without all the annoying HTML parts and compiles from ruby! :D hoo boy
+  %footer
+    %address p.deona001@gmail.com
