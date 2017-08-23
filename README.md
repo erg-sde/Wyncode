@@ -2,4 +2,4 @@
 Hello
 
 
-This message was left here by Eduardo Gonzalez.
+This message was left here by EG
